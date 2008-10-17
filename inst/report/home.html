@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="bicare.css">
+<title>essai</title>
+</head>
+<body>
+<div id="global">
+<div id="title">
+	<h1>BicARE report for analysis <i>ANALYSISNAME</i> performed on <i>DATE1</i></h1>
+	<h3>report created on <i>DATE2</i></h3>
+</div>
+<div id="main">
+  <div>
+	<h3>Algorithm parameters :</h3> 
+	<ul>
+		<li>number of bicluster : NBBIC</li>
+		<li>residu threshold : RESIDU</li>
+		<li>initial probability : PROBAINIT</li>
+		<li>number of iterations : NBITE</li>
+	</ul>
+  </div>
+  <div>
+	<h3>Biclusters :</h3>
+	<a href="listBic.html">Biclusters list </a>
+  </div>
+  <div>
+	<h3>Gene Sets :</h3>
+        <ul>
+	<li>Analysis on NBSETS gene sets</li>
+	<li>ENRICHEDSET gene sets are enriched in at least one bicluster at 20 %</li>
+        </ul>
+	<a href="geneSets.html"> Gene Sets analysis</a>
+  </div>
+  <div>
+	<h3>Samples Covariates :</h3>
+        <ul>
+	<li>Analysis on NBANNOT sample covariates</li>
+	<li>ENRICHEDANNOT sample covariates are enriched in at least one bicluster at 20 %</li>
+        </ul>
+	<a href="covar.html"> Samples covariates analysis</a>	
+  </div>
+</div>
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+useDynLib(BicARE)
+export(FLOC, bicluster, testAnnot, testSet, residue, makeReport)
+S3method(print, biclustering)
+S3method(plot, bicluster)

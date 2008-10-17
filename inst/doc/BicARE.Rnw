@@ -1,0 +1,156 @@
+% \VignetteIndexEntry{BicARE}
+% \VignetteDepends{}
+% \VignetteKeywords{Biclustering Analysis}
+% \VignettePackage{BicARE}
+
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage[authoryear,round]{natbib}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{verbose,letterpaper,tmargin=20mm,bmargin=20mm,lmargin=2.5cm,rmargin=2.5cm}
+\SweaveOpts{echo=FALSE}
+% -----------------------------------------------------------------------------------------------
+\begin{document}
+
+\title{\bf BicARE : Biclustering Analysis and Results Exploration}
+
+\author{Pierre Gestraud$^{1,2,3}$, Isabel Brito$^{1,2,3}$ and Emmanuel Barillot$^{1,2,3}$}
+
+\maketitle
+
+\begin{center}
+  1. Institut Curie, Paris, F-75248 France
+  
+  2. INSERM, U900, Paris, F-75248 France
+  
+  3. Ecole des Mines de Paris, Fontainebleau, F-77300 France
+  
+  \textit{http://bioinfo.curie.fr}
+\end{center}
+
+\tableofcontents
+
+\section{Overview}
+
+This document presents an overview of the \textit{BicARE} package. This package is dedicated to biclustering analysis which allows to discover sets of genes that have the same expression pattern accross a set of samples (for an overview of bicluster analysis see \cite{Madeira2004}). 
+
+\section{Biclustering analysis}
+
+<<echo=FALSE, print=FALSE>>=
+require(BicARE)
+@ 
+
+Data set used in this vignette is a subset of the \emph{sample.ExpressionSet}, 26 hgu95av2 arrays normalised by dChip. Only 352 probesets are kept (probesets with a minimal value greater than 1) and expression values are set to log2 scale. 
+
+<<echo=TRUE, print=TRUE>>=
+data(sample.bicData)
+sample.bicData
+@ 
+
+The biclustering algorithm used in \emph{BicARE} is based on the notion of residue which is a measure of coherence of the elements in a bicluster (see \cite{Yang2005} for a definition of the residue). The smaller the residue, the more coherent the bicluster.
+
+Computing the residue of the data matrix :
+<<echo=TRUE, print=TRUE>>=
+residue(sample.bicData)  
+@ 
+The core of the package is the \emph{FLOC} function which launches a modified version of the FLOC (FLexible Overlapped biClustering) algorithm, see \cite{Yang2005}. A predetermined number (parameter \emph{k}) of biclusters are build such that they are as big as possible with a residue smaller than the threshold (parameter \emph{r}). 
+
+\subsection{Random intialisation}
+
+In a strictly exploratory approach it is possible to build the biclusters around random seeds (random biclusters that are iteratively improved). The size of the random seeds is controlled by parameters \emph{pGene} and \emph{pSample} such as each gene (sample) has a probability \emph{pGene} (\emph{pSample}) to belong to each bicluster. Other parameters are the number of biclusters build (\emph{k}), the residue threshold (\emph{r}), the minimal number of genes (\emph{N}) per bicluster, the minimal number of conditions (\emph{M}) per bicluster and the number of iterations (\emph{t}).
+
+<<echo=TRUE, print=FALSE>>=
+set.seed(1)
+res.biclustering <- FLOC(sample.bicData, k=15, pGene=0.3, pSample=0.6, r=0.01, 10, 8, 200)
+@
+<<echo=TRUE, print=TRUE>>=
+res.biclustering
+@
+
+A data frame (\emph{mat.resvol.bic}) gives the characteristics of the biclusters such as the residue or the size of the biclusters. In the \emph{rowvar} column is displayed the mean of the variance of the genes in the bicluster. It helps to find non-trivial biclusters (e.g. constant bicluster). 
+
+\subsection{Directed initialisation}
+It is also possible to build biclusters around previous knowledge. Initialisation can be performed on genes, on samples or on both.
+
+The initialisation is performed by building boolean matrices indicating the membership of the elements to the biclusters. 
+
+<<echo=TRUE, print=FALSE>>=
+init.genes <- matrix(data=0, nrow=352, ncol=5)
+init.samples <- matrix(data=0, nrow=26, ncol=5)
+init.genes[1:10,1] <- 1
+init.genes[20:30,2] <- 1
+init.genes[50:60,3] <- 1
+init.samples[1:5,3] <- 1
+init.samples[1:5,4] <- 1
+init.samples[10:15,5] <- 1
+@ 
+
+Here the five first biclusters are initialised. Biclusters 1 and 2 are respectively initialised around genes 1 to 10 and 20 to 30; biclusters 4 and 5 around samples 1 to 5 and 10 to 15; bicluster 3 is initialised around genes 50 to 60 and samples 1 to 5. 
+
+If the number of biclusters initialised is different from the parameter \emph{k}, the real number of biclusters searched is the greater of the two. 
+
+The two initialisation matrices are given as arguments \emph{blocGene} and \emph{blocSample} to the \emph{FLOC} function.
+
+\subsection{Bicluster extraction}
+
+The \emph{bicluster} function extracts a bicluster from a \emph{biclustering} object. The bicluster is returned as a matrix with the genes on rows and the conditions on columns. The \emph{graph} option determines if a graphic should be plotted. 
+
+<<echo=TRUE, print=FALSE, fig=TRUE>>=
+bic <- bicluster(res.biclustering, 6, graph=FALSE)
+plot(bic)
+@ 
+\section{Additionnal analyses}
+
+Additionnal analyses can be performed on the biclustering results. These analyses allows a functionnal view of the biclusters by testing the over-representation of gene sets or a characterisation of the samples (e.g. clinical covariates).
+
+\subsection{Genesets enrichment}
+A functionnal view of the biclusters can be obtained by testing the over-representation of a priori defined gene sets. This over-representation is evaluated by an hypergometric test. The gene sets are in the \emph{GeneSetCollection} format.
+
+<<echo=TRUE, print=FALSE>>=
+gsc <- GeneSetCollection(res.biclustering$ExpressionSet[1:50], setType=GOCollection())
+res.bic2 <- testSet(res.biclustering, gsc)
+@
+
+The \emph{testSet} function returns an updated \emph{biclustering} object with a new attribute \emph{geneSet}. It is a list containing the \emph{GeneSetCollection} used, the p-values (from an hypergeometric test) and the adjusted p-values.
+
+\subsection{Sample covariates enrichment}
+
+Three covariates for the samples are provided in the example data set. Function \emph{testAnnot} only uses categorical covariates (here \emph{sex} and \emph{type}). For each bicluster, the function evaluates, with a $\chi^2$ test of adequation, the enrichment of each level of the covariates. 
+
+<<echo=TRUE, print=FALSE>>=
+pData(sample.bicData)
+@ 
+
+<<echo=TRUE, print=FALSE>>=
+res.bic2 <- testAnnot(res.biclustering, annot=pData(sample.bicData), covariates=c("sex", "type"))
+@
+
+As \emph{testSet} does, the \emph{testAnnot} function returns an updated \emph{biclustering} object with a new attribute \emph{covar}. It is a list containing the covariates used, the p-values and adjusted p-values, the numbers of each level in each bicluster and the residuals of the tests.
+
+\section{Building html report}
+
+Dealing with biclustering results is a tedious task because of the amount of data to explore. A user-friendly report can be created with the function \emph{makeReport}. It allows an easy navigation through the results by different approaches : 
+\begin{itemize}
+\item by bicluster
+\item by gene sets in order to examine the biclusters enriched in gene sets of interest
+\item by sample covariates in order to examine the biclusters enriched in samples with characteristics of interest
+\end{itemize}
+
+Each bicluster is presented by the lists of the genes and samples and by a plot of the expression profiles.
+
+\begin{Schunk}
+  \begin{Sinput}
+    > dirPath <- getwd()
+    > dirName <- "test"
+    > makeReport(dirPath=dirPath, dirName=dirName, resBic=res.bic2, browse=FALSE)
+  \end{Sinput}
+\end{Schunk}
+
+The html report is created in the directory \emph{dirName} in the current working directory. The \emph{browse} option determines if the web browser is opened on the \textit{home.html} file. Before running \emph{makeReport} it is advised to check if the results directory can be created.   
+
+\bibliographystyle{apalike}
+\bibliography{biblio}
+
+\end{document}
