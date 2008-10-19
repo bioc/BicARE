@@ -9,7 +9,7 @@
 \usage{FLOC(Data, k = 20, pGene = 0.5, pSample=pGene, r = NULL, N = 8, M = 6, t = 500, blocGene = NULL, blocSample = NULL)}
 
 \arguments{
-   \item{Data}{an \code{\linkS4class{ExpressionSet}} or a matrix (with
+   \item{Data}{an \code{\link[Biobase]{ExpressionSet-class}} or a matrix (with
    genes on rows and conditions on columns)}
    \item{k}{the number of biclusters searched}
    \item{pGene}{genes initial probability of membership to the biclusters}

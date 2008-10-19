@@ -6,7 +6,7 @@
 
 \arguments{
   \item{resBic}{a \code{biclustering} object created by \code{\link{FLOC}}}
-  \item{geneSetCol}{a \code{\linkS4class{GeneSetCollection}}}
+  \item{geneSetCol}{a \code{\link[GSEABase]{GeneSetCollection-class}}}
 }
 
 \details{

@@ -9,7 +9,7 @@
 \usage{residue(Data)}
 
 \arguments{
-   \item{Data}{an \code{\linkS4class{ExpressionSet}} or a matrix}
+   \item{Data}{an \code{\link[Biobase]{ExpressionSet-class}} or a matrix}
 }
 
 \details{
