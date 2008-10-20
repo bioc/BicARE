@@ -10,12 +10,12 @@
   \item{biclustering}{an object of class "biclustering" created by
     function \code{\link{FLOC}}}
   \item{k}{the number of the bicluster considered in the "biclustering" object}
-  \item{graph}{boolean, indicating whether the graph should be ploted
+  \item{graph}{boolean, indicating whether the graph should be plotted
     or not}
 }
 
 \value{Returns the bicluster as a matrix with the genes on rows and the
-  samples on columns. Result marix is of class "bicluster". The "graph" option allows to plot the expression profiles of the genes across the conditions in the bicluster.}
+  samples on columns. Result matrix is of class "bicluster". The "graph" option allows to plot the expression profiles of the genes across the conditions in the bicluster.}
 
 \author{Pierre Gestraud}
 
