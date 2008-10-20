@@ -12,7 +12,7 @@
 \details{
 	The over-representation of a gene set in a bicluster is evaluated by an hypergeometric test. 
 	    
-	The genes identifiers of the gene sets will automaticaly be mapped to
+	The genes identifiers of the gene sets will automatically be mapped to
   	the same as those used in the data. 
   
   	Due to the amount of results it is advised to use the \code{\link{makeReport}} function to get a html report. 
