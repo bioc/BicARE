@@ -33,7 +33,7 @@ testSet <- function(resBic, geneSetCol){
             adjBic <- adjSet & setBic
             dimAdjBic <- length(geneIds(adjBic))
             
-            if (dimAdjBic > 0){     ## mettre un seuil 
+            if (dimAdjBic > 0){
                 pval[j, i] <- phyper(dimAdjBic, dimSet, dimNonSet, dimBic, lower.tail=FALSE)
             }
         }

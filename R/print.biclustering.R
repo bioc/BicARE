@@ -8,7 +8,7 @@ print.biclustering <-  function(x, ...){
     cat("\n number of biclusters : ", param[1,2])
     cat("\n residu threshold : ", param[2,2])
     cat("\n gene initial probability : ", param[3,2])
-    cat("\n sample initial probability : ", param[3,2])
+    cat("\n sample initial probability : ", param[4,2])
     cat("\n number of iterations : ", param[5,2])
     cat("\n date : ", param[6,2])    
     cat("\nBiclusters : \n")
