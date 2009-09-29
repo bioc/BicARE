@@ -4,13 +4,16 @@
 
 \title{Performs the FLOC algorithm}
 
-\description{Find a given number of biclusters using the a modified version of the FLOC algorithm.}
+\description{Find a given number of biclusters using the a modified
+  version of the FLOC algorithm.} 
 
-\usage{FLOC(Data, k = 20, pGene = 0.5, pSample=pGene, r = NULL, N = 8, M = 6, t = 500, blocGene = NULL, blocSample = NULL)}
+\usage{FLOC(Data, k = 20, pGene = 0.5, pSample=pGene, r = NULL, N = 8, M
+= 6, t = 500, blocGene = NULL, blocSample = NULL)} 
 
 \arguments{
-   \item{Data}{an \code{\link[Biobase]{ExpressionSet-class}} or a matrix (with
-   genes on rows and conditions on columns)}
+   \item{Data}{an
+   \code{\link[Biobase:class.ExpressionSet]{ExpressionSet}} or a
+   matrix (with genes on rows and conditions on columns)}
    \item{k}{the number of biclusters searched}
    \item{pGene}{genes initial probability of membership to the biclusters}
    \item{pSample}{samples initial probability of membership to the biclusters}
@@ -26,7 +29,8 @@
 
 \details{This biclustering algorithm is based on the FLOC algorithm (FLexible
   Overlapped biClustering) defined by Yang et al. (see references). It
-  can discover a set of \code{k}, possibly overlapping, biclusters. If \code{r} is set to
+  can discover a set of \code{k}, possibly overlapping, biclusters. If
+  \code{r} is set to 
   NULL, the residue threshold used in the analysis is the residue of
   \code{Data} divided by 10.
   

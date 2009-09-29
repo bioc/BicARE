@@ -9,7 +9,9 @@
 \usage{residue(Data)}
 
 \arguments{
-   \item{Data}{an \code{\link[Biobase]{ExpressionSet-class}} or a matrix}
+   \item{Data}{an
+   \code{\link[Biobase:class.ExpressionSet]{ExpressionSet-class}} or a
+   matrix} 
 }
 
 \details{
@@ -17,7 +19,9 @@
   by Yang et al (see references). 
 }
 
-\references{J. Yang, H. Wang, W. Wang, and P.S. Yu. An improved biclustering method for analyzing gene expression. International Journal on Artificial Intelligence Tools, 14(5):771-789, 2005}
+\references{J. Yang, H. Wang, W. Wang, and P.S. Yu. An improved
+  biclustering method for analyzing gene expression. International
+  Journal on Artificial Intelligence Tools, 14(5):771-789, 2005} 
 
 \author{
   Pierre Gestraud
