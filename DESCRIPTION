@@ -1,5 +1,5 @@
 Package: BicARE
-Version: 1.5.0
+Version: 1.6.0
 Date: 2008-06-05
 Title: Biclustering Analysis and Results Exploration
 Depends: R (>= 1.8.0), Biobase (>= 2.5.5), multtest, GSEABase
