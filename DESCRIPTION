@@ -1,11 +1,11 @@
 Package: BicARE
-Version: 1.9.0
+Version: 1.9.1
 Date: 2008-06-05
 Title: Biclustering Analysis and Results Exploration
 Depends: R (>= 1.8.0), Biobase (>= 2.5.5), multtest, GSEABase
 Author: Pierre Gestraud
 Maintainer: Pierre Gestraud  <pierre.gestraud@curie.fr>
 Description:Biclustering Analysis and Results Exploration
-License: GPL
+License: GPL-2
 biocViews: Microarray, Transcription, Bioinformatics, Clustering
 URL: http://bioinfo.curie.fr
